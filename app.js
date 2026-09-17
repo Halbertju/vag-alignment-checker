@@ -23,11 +23,24 @@ function genericDecode(vin){
   const type = vin.slice(6,8);
   out.typeHint = type;
   const hints = {
-    "5N":"Tiguan","3C":"Passat","AU":"Golf-family","4G":"A6 C7 / A7 family",
-    "F2":"A6 C8 / A7 C8 family","8P":"A3 8P","5F":"Leon 5F","7P":"Touareg 7P",
-    "GY":"A3 8Y family"
+    "5N":{model:"Tiguan", generation:"5N"},
+    "3C":{model:"Passat", generation:"3C"},
+    "AU":{model:"Golf", generation:"VII / MQB"},
+    "4G":{model:"A6", generation:"C7 / 4G"},
+    "F2":{model:"A6", generation:"C8 / F2"},
+    "8P":{model:"A3", generation:"8P"},
+    "5F":{model:"Leon", generation:"5F"},
+    "7P":{model:"Touareg", generation:"7P"},
+    "GY":{model:"A3", generation:"8Y"}
   };
-  out.modelHint = hints[type] || "";
+  const hint = hints[type];
+  if(hint){
+    out.modelHint = hint.model;
+    out.generationHint = hint.generation;
+  } else {
+    out.modelHint = "";
+    out.generationHint = "";
+  }
   return out;
 }
 
@@ -109,6 +122,11 @@ async function analyzeVin(){
     if(api?.useful) state.externalLookup = true;
   }
 
+  // Om de externa källorna bara ger t.ex. "Audi + MY2024", använd en tydlig
+  // VAG-typkod från VIN som modell/generationsledtråd istället för att fråga användaren igen.
+  if(!state.model && local.modelHint) state.model = local.modelHint;
+  if(!state.generation && local.generationHint) state.generation = local.generationHint;
+
   $("vinHelp").textContent = api?.useful ? `Fordonsdata hämtad från ${api.source || "gratis VIN-källor"}.` : "VIN-källorna gav begränsad information. Jag använder lokala VIN-ledtrådar och frågar bara efter det som saknas.";
   showIdentified();
   decideNext();
@@ -131,7 +149,7 @@ function showIdentified(){
   else if(state.drive) details.push(`Drivning: ${state.drive.toUpperCase()}`);
   if(state.body) details.push(`Kaross: ${state.body}`);
   if(state.note) details.push(state.note);
-  if(!state.model && state.modelHint) details.push(`VIN-ledtråd: <strong>${state.modelHint}</strong>`);
+  if(localStorage.getItem("debugNever")) details.push("");
   if(state.yearSource) details.push(`<span class="small">Årsmodellskälla: ${state.yearSource}</span>`);
 
   $("identified").innerHTML = `<h2>${title}</h2><div class="muted">${details.join("<br>") || "Jag behöver kompletterande information för exakt chassival."}</div>`;
@@ -180,8 +198,13 @@ function continueQuestions(){
   if($("qVariant")?.value) state.variant=$("qVariant").value;
   if($("qRear")?.value) state.rearAxle=$("qRear").value;
   if($("qDcc")?.value) state.dcc=$("qDcc").value==="yes";
+
+  const matches = findMatches(state);
   $("questions").classList.add("hidden");
-  renderResult(findMatches(state));
+  renderResult(matches);
+
+  // Gör det tydligt att något faktiskt hände efter "Fortsätt".
+  setTimeout(() => $("result").scrollIntoView({behavior:"smooth", block:"start"}), 50);
 }
 
 function hasAny(text, words=[]){const t=norm(text);return words.some(w=>t.includes(norm(w)));}
@@ -222,9 +245,10 @@ function findMatches(s){
 function renderResult(matches){
   const box=$("result"); box.classList.remove("hidden");
   if(!matches.length || matches[0].score<5){
-    box.innerHTML=`<div class="result-head"><h2>Resultat</h2><span class="badge low">Kontroll krävs</span></div>
-      <p>Fordonet är identifierat så långt gratis VIN-data räcker, men regelbasen kan ännu inte välja rätt PR/G-grupp.</p>
-      <div class="info"><strong>Nästa steg:</strong> kontrollera PR-lappen eller lägg till en regel för denna modell/generation. Appen gissar inte alignmentdata.</div>`;
+    const ident = [state.brand, state.model, state.generation, state.year ? `MY${state.year}` : ""].filter(Boolean).join(" · ");
+    box.innerHTML=`<div class="result-head"><h2>Resultat</h2><span class="badge low">PR/G-grupp saknas</span></div>
+      <p><strong>${ident || "Fordonet"}</strong> är identifierat, men vår regelbas innehåller ännu inte en tillräckligt säker hjulinställningsregel för just denna generation/variant.</p>
+      <div class="info"><strong>Det är inte ett VIN-fel.</strong> Nästa steg är att fastställa PR/G-koden för bilen, helst via PR-lappen/Haynes/OE. Appen ska inte hitta på en kod.</div>`;
     $("prPanel").classList.remove("hidden");
     return;
   }
@@ -252,7 +276,7 @@ function renderResult(matches){
       `<div class="info">Alignmentvärden är ännu inte inlagda för denna regel. Använd PR/G-gruppen i Haynes/OE.</div>`}
     ${best.warning?`<div class="warning"><strong>Databasvarning:</strong> ${best.warning}</div>`:""}
     ${ambiguity}
-    <div class="small" style="margin-top:12px">Fordonsidentitet kan komma från NHTSA vPIC; PR/G-grupp kommer från vår egen regelbas.</div>`;
+    <div class="small" style="margin-top:12px">Fordonsidentitet kommer från gratis VIN-källor + VAG-typkod; PR/G-grupp kommer från vår egen regelbas.</div>`;
   saveHistory(best);
 }
 

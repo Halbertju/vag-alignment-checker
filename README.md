@@ -1,4 +1,4 @@
-# VAG Alignment Checker 0.4
+# VAG Alignment Checker 0.4.1
 
 Version 0.4 använder en gratis serverfunktion på Cloudflare Pages.
 
@@ -36,3 +36,9 @@ Testa:
 WAUZZZGY2RA025029
 
 Målet är att få mer än bara Audi + MY2024, helst modell A3 och kompletterande fordonsdata när någon av källorna har det.
+
+
+## Fix i 0.4.1
+- `GY` i Audi-VIN används nu som ledtråd till **A3 / 8Y**, så appen ska inte fråga efter A3 när den redan kan härleda det.
+- Efter följdfrågor visas alltid ett resultat och sidan scrollar automatiskt dit.
+- Om regelbasen ännu saknar rätt A3 8Y-regel visas detta tydligt som ett **regeldata-problem**, inte som om knappen inte fungerade.
