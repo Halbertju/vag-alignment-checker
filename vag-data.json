@@ -295,7 +295,7 @@
       "confidence": "high"
     },
     {
-      "id": "audi_a3_8y_standard",
+      "id": "audi_a3_8y_standard_35tfsi",
       "brand": "Audi",
       "model": "A3",
       "generation": "8Y",
@@ -304,23 +304,42 @@
         2021,
         2022,
         2023,
-        2024
+        2024,
+        2025
       ],
       "variant_keywords": [
-        "standard",
-        "standardchassi",
-        "komfort"
+        "standard"
       ],
-      "pr_codes": [
+      "engine_keywords": [
+        "35 tfsi",
+        "110 kw",
+        "150"
+      ],
+      "chassis": "Standardchassi",
+      "g_code_candidates": [
+        "G01",
+        "G02",
+        "G06",
+        "G07",
+        "G11",
+        "G25",
+        "G28",
+        "G29",
+        "G32"
+      ],
+      "rear_axle_pr": [
+        "0N4"
+      ],
+      "suspension_pr_candidates": [
         "1JA"
       ],
-      "chassis": "Standardchassi / komfortchassi",
-      "launch_hint": "Sök i Launch efter A3 8Y + 1JA (standardchassi)",
-      "confidence": "high",
-      "evidence": "Audi MY2024 prislista: 1JA = Serienfahrwerk / standardchassi."
+      "launch_hint": "A3 8Y standard – välj Launch-rad efter bilens faktiska G-kod och 0N4/multilänk",
+      "confidence": "medium",
+      "source_summary": "A3 8Y 35 TFSI 110 kW förekommer med flera G-koder för framvagn beroende på fjäderben/axellast. 110 kW-versioner använder 4-länkad bakaxel (0N4).",
+      "warning": "1JA är en PR-kod för bakre dämpnings-/fjädringsvariant, inte samma sak som den G-kod Haynes/Launch kan använda för framvagnsgruppen. Exakt G-kod kan inte väljas säkert från VIN ensam."
     },
     {
-      "id": "audi_a3_8y_sport_18",
+      "id": "audi_a3_8y_sport",
       "brand": "Audi",
       "model": "A3",
       "generation": "8Y",
@@ -329,46 +348,35 @@
         2021,
         2022,
         2023,
-        2024
+        2024,
+        2025
       ],
       "variant_keywords": [
         "sport",
-        "sportchassi",
-        "s line sport"
+        "s line sport",
+        "sport 19"
       ],
-      "pr_codes": [
-        "1JC"
+      "chassis": "Sportchassi",
+      "g_code_candidates": [
+        "G01",
+        "G02",
+        "G04",
+        "G05",
+        "G06",
+        "G07",
+        "G11"
       ],
-      "chassis": "Sportchassi, 15 mm sänkt, upp till 18-tums hjul",
-      "launch_hint": "Sök i Launch efter A3 8Y + 1JC (sportchassi)",
-      "confidence": "medium",
-      "evidence": "Audi MY2024 prislista: 1JC = sportchassi för max 18-tums hjul."
-    },
-    {
-      "id": "audi_a3_8y_sport_19",
-      "brand": "Audi",
-      "model": "A3",
-      "generation": "8Y",
-      "years": [
-        2020,
-        2021,
-        2022,
-        2023,
-        2024
+      "rear_axle_pr": [
+        "0N4"
       ],
-      "variant_keywords": [
-        "sport 19",
-        "sportchassi 19",
-        "19 tum",
-        "19-tum"
-      ],
-      "pr_codes": [
+      "suspension_pr_candidates": [
+        "1JC",
         "1JF"
       ],
-      "chassis": "Sportchassi, 15 mm sänkt, 19-tums hjul",
-      "launch_hint": "Sök i Launch efter A3 8Y + 1JF (sportchassi 19 tum)",
-      "confidence": "high",
-      "evidence": "Audi MY2024 prislista: 1JF = sportchassi för 19-tums hjul."
+      "launch_hint": "A3 8Y sport – välj Launch-rad efter faktisk G-kod + 0N4; 1JC/1JF skiljer sportfjädringsvariant",
+      "confidence": "medium",
+      "source_summary": "A3 8Y sportchassi använder 1JC/1JF som fjädrings-/dämpningsvarianter; exakt G-kod beror på framvagn/axellast.",
+      "warning": "Välj inte en enda G-kod från VIN utan PR-lapp eller motsvarande OE-data."
     },
     {
       "id": "audi_a3_8y_adaptive",
@@ -380,7 +388,8 @@
         2021,
         2022,
         2023,
-        2024
+        2024,
+        2025
       ],
       "variant_keywords": [
         "adaptive",
@@ -388,14 +397,21 @@
         "adaptiva dämpare",
         "dcc"
       ],
-      "pr_codes": [
-        "PDE"
+      "chassis": "Adaptivt chassi / elektronisk dämparreglering",
+      "g_code_candidates": [
+        "G02",
+        "G04",
+        "G05",
+        "G06"
       ],
-      "chassis": "Adaptivt chassi med Audi drive select, 10 mm sänkt",
-      "launch_hint": "Sök i Launch efter A3 8Y adaptivt chassi / PDE",
-      "confidence": "medium",
-      "warning": "PDE är Audis beställnings-/paketkod i MY2024-prislistan. Kontrollera PR-lappen om Launch använder en mer specifik fjädringskod.",
-      "evidence": "Audi MY2024 prislista: PDE = adaptivt chassi med dämparreglering, 10 mm lägre än standard."
+      "rear_axle_pr": [
+        "0N4"
+      ],
+      "suspension_pr_candidates": [],
+      "launch_hint": "A3 8Y adaptivt chassi – kontrollera faktisk PR/G-kod innan Launch-val",
+      "confidence": "low",
+      "source_summary": "Elektronisk dämparreglering förekommer på A3 8Y, men exakt alignmentgrupp kan inte fastställas säkert enbart från VIN.",
+      "warning": "PR-lapp/OE-data krävs för exakt G-kod."
     }
   ],
   "known_vins": {

@@ -231,6 +231,9 @@ function scoreRule(rule,s){
     if(hasAny(s.variant,rule.variant_keywords)) score+=3;
     else if(s.variant) score-=1;
   }
+  if(rule.engine_keywords?.length && s.engine){
+    if(hasAny(s.engine, rule.engine_keywords)) score+=2;
+  }
   if(rule.requires){
     for(const [k,v] of Object.entries(rule.requires)){
       if(k==="awd" && s.drive){ if((s.drive==="awd")===v) score+=3; else return null; }
@@ -261,20 +264,26 @@ function renderResult(matches){
     return;
   }
   const best=matches[0].rule;
-  const codes=[...(best.g_codes||[]),...(best.pr_codes||[])].join(" / ")||"Ej specificerat";
+  const codes=[...(best.g_codes||[]),...(best.pr_codes||[])].join(" / ")||"";
+  const gCandidates=(best.g_code_candidates||[]).join(" / ");
+  const rearAxle=(best.rear_axle_pr||[]).join(" / ");
+  const suspensionPr=(best.suspension_pr_candidates||[]).join(" / ");
   const conf=best.confidence==="high"?"high":best.confidence==="medium"?"medium":"low";
   const confText=best.confidence==="high"?"Hög":best.confidence==="medium"?"Medel":"Kontroll krävs";
   const a=best.alignment;
   let ambiguity="";
   if(matches[1] && matches[1].score>=matches[0].score-1){
     const r=matches[1].rule;
-    ambiguity=`<div class="warning"><strong>Flera möjliga chassin.</strong> Alternativ: ${(r.g_codes||r.pr_codes||[]).join(" / ")} – ${r.chassis||""}. Kontrollera PR-lapp om du inte kan skilja dem på bilen.</div>`;
+    const altCodes=[...(r.g_code_candidates||[]),...(r.g_codes||[]),...(r.pr_codes||[])].join(" / ");
+    ambiguity=`<div class="warning"><strong>Flera möjliga chassin.</strong> Alternativ: ${altCodes || "annan PR/G-grupp"} – ${r.chassis||""}. Kontrollera PR-lapp om du inte kan skilja dem på bilen.</div>`;
   }
   box.innerHTML=`
     <div class="result-head"><h2>Föreslaget val</h2><span class="badge ${conf}">${confText}</span></div>
     <div class="kv">
       <div>Bil</div><div>${best.brand} ${best.model} ${best.generation||""}${state.year?` · MY${state.year}`:""}</div>
-      <div>G-/PR-grupp</div><div><strong>${codes}</strong></div>
+      ${gCandidates?`<div>G-kod</div><div><strong>${gCandidates}</strong> <span class="small">(kandidater – exakt kod ej fastställd)</span></div>`:`<div>G-/PR-grupp</div><div><strong>${codes||"Ej fastställd"}</strong></div>`}
+      ${rearAxle?`<div>Bakaxel-PR</div><div><strong>${rearAxle}</strong></div>`:""}
+      ${suspensionPr?`<div>Fjädrings-PR</div><div><strong>${suspensionPr}</strong></div>`:""}
       <div>Chassityp</div><div>${best.chassis||"-"}</div>
       <div>Launch</div><div><strong>${best.launch_hint||"-"}</strong></div>
     </div>
@@ -283,7 +292,7 @@ function renderResult(matches){
       <tr><td>Bak</td><td>${a.rear_toe||"-"}</td><td>${a.rear_camber||"-"}</td></tr></tbody></table>`:
       `<div class="info">Alignmentvärden är ännu inte inlagda för denna regel. Använd PR/G-gruppen i Haynes/OE.</div>`}
     ${best.warning?`<div class="warning"><strong>Databasvarning:</strong> ${best.warning}</div>`:""}
-    ${best.evidence?`<div class="info"><strong>Underlag:</strong> ${best.evidence}</div>`:""}
+    ${best.source_summary?`<div class="info"><strong>Tekniskt underlag:</strong> ${best.source_summary}</div>`:""}
     ${ambiguity}
     <div class="small" style="margin-top:12px">Fordonsidentitet kommer från gratis VIN-källor + VAG-typkod; PR/G-grupp kommer från vår egen regelbas.</div>`;
   saveHistory(best);
