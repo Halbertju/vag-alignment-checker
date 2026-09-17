@@ -46,44 +46,31 @@ function mapDriveType(v){
   return "";
 }
 
-async function decodeWithVpic(vin, fallbackYear){
+
+async function decodeWithBackend(vin){
   const controller = new AbortController();
-  const timeout = setTimeout(()=>controller.abort(), 7000);
+  const timeout = setTimeout(()=>controller.abort(), 9000);
   try{
-    let url = `https://vpic.nhtsa.dot.gov/api/vehicles/DecodeVinValuesExtended/${encodeURIComponent(vin)}?format=json`;
-    if(fallbackYear) url += `&modelyear=${encodeURIComponent(fallbackYear)}`;
-    const r = await fetch(url, {signal:controller.signal});
+    const r = await fetch(`/api/vin?vin=${encodeURIComponent(vin)}`, {signal:controller.signal});
     if(!r.ok) throw new Error(`HTTP ${r.status}`);
     const j = await r.json();
-    const x = j?.Results?.[0];
-    if(!x) return null;
-
-    const make = cleanApiValue(x.Make);
-    const model = cleanApiValue(x.Model);
-    const modelYear = cleanApiValue(x.ModelYear);
-    const driveType = cleanApiValue(x.DriveType);
-    const engine = [cleanApiValue(x.DisplacementL) ? `${cleanApiValue(x.DisplacementL)} L` : "", cleanApiValue(x.EngineCylinders) ? `${cleanApiValue(x.EngineCylinders)} cyl` : "", cleanApiValue(x.FuelTypePrimary)].filter(Boolean).join(" · ");
-    const transmission = cleanApiValue(x.TransmissionStyle);
-    const body = cleanApiValue(x.BodyClass);
-    const series = [cleanApiValue(x.Series), cleanApiValue(x.Trim)].filter(Boolean).join(" / ");
-    const errorText = cleanApiValue(x.ErrorText);
-
-    const useful = Boolean(make || model || modelYear || driveType || engine || transmission || body || series);
-    if(!useful) return {useful:false,errorText};
-
+    if(!j?.ok || !j?.useful) return null;
+    const v = j.vehicle || {};
     return {
       useful:true,
-      brand: make,
-      model,
-      year: modelYear ? Number(modelYear) : "",
-      drive: mapDriveType(driveType),
-      driveRaw: driveType,
-      engine,
-      transmission,
-      body,
-      series,
-      apiErrorText:errorText,
-      source:"NHTSA vPIC"
+      brand: cleanApiValue(v.brand),
+      model: cleanApiValue(v.model),
+      year: v.year ? Number(v.year) : "",
+      drive: cleanApiValue(v.drive),
+      driveRaw: cleanApiValue(v.driveRaw),
+      engine: cleanApiValue(v.engine),
+      fuel: cleanApiValue(v.fuel),
+      transmission: cleanApiValue(v.transmission),
+      body: cleanApiValue(v.body),
+      series: cleanApiValue(v.series),
+      registrationCountry: cleanApiValue(v.registrationCountry),
+      source: (v.sources || []).join(" + "),
+      diagnostics: j.diagnostics || {}
     };
   } finally {
     clearTimeout(timeout);
@@ -106,7 +93,7 @@ async function analyzeVin(){
   const known = DB.known_vins?.[vin];
   let api = null;
   try{
-    api = await decodeWithVpic(vin, local.year || "");
+    api = await decodeWithBackend(vin);
   }catch(e){
     api = null;
   }
@@ -114,7 +101,7 @@ async function analyzeVin(){
   state = {...local, vin, known:false};
   if(api?.useful){
     state = {...state, ...api, vin, externalLookup:true};
-    state.yearSource = "NHTSA vPIC";
+    state.yearSource = api.source || "externa VIN-källor";
   }
   if(known){
     // Kända manuellt verifierade uppgifter väger tyngre än en ofullständig publik VIN-dekodning.
@@ -122,7 +109,7 @@ async function analyzeVin(){
     if(api?.useful) state.externalLookup = true;
   }
 
-  $("vinHelp").textContent = api?.useful ? "Fordonsdata hämtad från gratis VIN-källa." : "VIN-källan gav begränsad information. Jag använder lokala VIN-ledtrådar och frågar bara efter det som saknas.";
+  $("vinHelp").textContent = api?.useful ? `Fordonsdata hämtad från ${api.source || "gratis VIN-källor"}.` : "VIN-källorna gav begränsad information. Jag använder lokala VIN-ledtrådar och frågar bara efter det som saknas.";
   showIdentified();
   decideNext();
 }
@@ -138,6 +125,7 @@ function showIdentified(){
   if(state.series) details.push(`Serie/trim: <strong>${state.series}</strong>`);
   if(state.generation) details.push(`Typ/generation: <strong>${state.generation}</strong>`);
   if(state.engine) details.push(`Motor: ${state.engine}`);
+  if(state.fuel && !state.engine?.toLowerCase().includes(String(state.fuel).toLowerCase())) details.push(`Bränsle: ${state.fuel}`);
   if(state.transmission) details.push(`Växellåda: ${state.transmission}`);
   if(state.driveRaw) details.push(`Drivning: ${state.driveRaw}`);
   else if(state.drive) details.push(`Drivning: ${state.drive.toUpperCase()}`);
