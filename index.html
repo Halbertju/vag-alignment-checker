@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="sv">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>VAG Alignment Checker</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+<main class="wrap">
+  <header>
+    <div class="eyebrow">VAG Alignment Checker · prototyp 0.2</div>
+    <h1>Klistra in chassinumret</h1>
+    <p class="lead">Appen försöker identifiera bilen och frågar bara efter det som saknas för att hitta rätt PR/G-grupp.</p>
+  </header>
+
+  <section class="hero card">
+    <label for="vin">VIN / chassinummer</label>
+    <div class="vinrow">
+      <input id="vin" maxlength="17" autocomplete="off" autocapitalize="characters" placeholder="WVGZZZ5NZHW424875">
+      <button id="analyzeVin">Analysera</button>
+    </div>
+    <div id="vinHelp" class="small"></div>
+  </section>
+
+  <section id="identified" class="card hidden"></section>
+
+  <section id="questions" class="card hidden">
+    <h2>Jag behöver veta lite mer</h2>
+    <p class="muted">Svara bara på det som går att se eller känna till. Om du är osäker kan PR-lappen användas.</p>
+    <div id="questionFields" class="grid"></div>
+    <div class="actions">
+      <button id="continueBtn">Fortsätt</button>
+      <button id="showPrBtn" class="secondary">Jag har PR-lappen</button>
+    </div>
+  </section>
+
+  <section id="prPanel" class="card hidden">
+    <h2>PR-lapp</h2>
+    <p>Ta ett foto med mobilen eller välj en bild. I gratisversionen sparas bilden bara lokalt; skriv in relevanta koder om du ser dem.</p>
+    <input id="photo" type="file" accept="image/*" capture="environment">
+    <img id="preview" class="preview hidden" alt="PR-lapp">
+    <label>PR/G-koder från lappen
+      <input id="manualPr" placeholder="t.ex. 1BE, G03, UA4">
+    </label>
+    <button id="applyPr">Använd koderna</button>
+  </section>
+
+  <section id="result" class="card hidden"></section>
+
+  <section class="card">
+    <div class="section-head"><h2>Senaste fordon</h2><button id="clearHistory" class="textbtn">Rensa</button></div>
+    <div id="history"></div>
+  </section>
+
+  <footer>Ingen betald datakälla används. När exakt chassi inte kan fastställas ska appen hellre fråga än gissa.</footer>
+</main>
+<script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,359 @@
+{
+  "version": "0.1",
+  "rules": [
+    {
+      "id": "vw_passat_b7_alltrack",
+      "brand": "Volkswagen",
+      "model": "Passat",
+      "generation": "B7 / 36",
+      "years": [
+        2012,
+        2013,
+        2014,
+        2015
+      ],
+      "variant_keywords": [
+        "alltrack"
+      ],
+      "g_codes": [
+        "G42",
+        "G43"
+      ],
+      "chassis": "Alltrack / raised",
+      "launch_hint": "36 G42/G43 ALLTRACK",
+      "alignment": {
+        "front_toe": "0°10′",
+        "front_camber": "-0°14′",
+        "rear_toe": "0°10′",
+        "rear_camber": "-1°45′"
+      },
+      "confidence": "high"
+    },
+    {
+      "id": "vw_passat_b8_alltrack",
+      "brand": "Volkswagen",
+      "model": "Passat",
+      "generation": "B8 / 3G",
+      "years": [
+        2015,
+        2016,
+        2017,
+        2018,
+        2019,
+        2020,
+        2021,
+        2022,
+        2023
+      ],
+      "variant_keywords": [
+        "alltrack"
+      ],
+      "g_codes": [
+        "G03",
+        "G05",
+        "G06",
+        "G09"
+      ],
+      "chassis": "Alltrack / raised",
+      "launch_hint": "ALLTRACK (PR=G03/5/6/9)",
+      "alignment": {
+        "front_toe": "0°10′",
+        "front_camber": "-0°20′",
+        "rear_toe": "0°10′",
+        "rear_camber": "-1°20′"
+      },
+      "confidence": "high"
+    },
+    {
+      "id": "vw_golf7_variant_torsion_standard",
+      "brand": "Volkswagen",
+      "model": "Golf Variant",
+      "generation": "VII",
+      "years": [
+        2013,
+        2014,
+        2015,
+        2016,
+        2017,
+        2018,
+        2019,
+        2020
+      ],
+      "requires": {
+        "rear_axle": "torsion"
+      },
+      "pr_codes": [
+        "2UA"
+      ],
+      "g_codes": [
+        "G01",
+        "G02",
+        "G05",
+        "G07",
+        "G16",
+        "G18",
+        "G22"
+      ],
+      "chassis": "Standard / torsion beam",
+      "launch_hint": "VII VARIANT ... 2UA STANDARD CHASSIS TORSION BEAM",
+      "alignment": {
+        "front_toe": "0°10′",
+        "front_camber": "-0°30′",
+        "rear_toe": "0°21′",
+        "rear_camber": "-1°00′"
+      },
+      "confidence": "high"
+    },
+    {
+      "id": "vw_tiguan2_awd_pre2021",
+      "brand": "Volkswagen",
+      "model": "Tiguan",
+      "generation": "II / AD",
+      "years": [
+        2016,
+        2017,
+        2018,
+        2019,
+        2020
+      ],
+      "requires": {
+        "awd": true
+      },
+      "g_codes": [
+        "G01",
+        "G04",
+        "G06",
+        "G07",
+        "G08"
+      ],
+      "chassis": "Base/DCC AWD group",
+      "launch_hint": "AD G01/G04/G06/G07/G08 BASE/DCC AWD",
+      "alignment": {
+        "front_toe": "0°10′",
+        "front_camber": "-0°16′",
+        "rear_toe": "0°10′",
+        "rear_camber": "-1°20′"
+      },
+      "confidence": "high"
+    },
+    {
+      "id": "vw_touareg7p_steel",
+      "brand": "Volkswagen",
+      "model": "Touareg",
+      "generation": "7P / 7P6",
+      "years": [
+        2011,
+        2012,
+        2013,
+        2014,
+        2015,
+        2016,
+        2017,
+        2018
+      ],
+      "requires": {
+        "air_suspension": false
+      },
+      "pr_codes": [
+        "1BA",
+        "1BE",
+        "1BW"
+      ],
+      "chassis": "Steel suspension",
+      "launch_hint": "7P6 1BA/1BE/1BW STEEL SUSPENSION",
+      "alignment": {
+        "front_toe": "0°13′",
+        "front_camber": "-0°15′",
+        "rear_toe": "0°19′",
+        "rear_camber": "-1°21′"
+      },
+      "confidence": "high"
+    },
+    {
+      "id": "audi_a6_c8_sport",
+      "brand": "Audi",
+      "model": "A6",
+      "generation": "C8 / F2",
+      "years": [
+        2018,
+        2019,
+        2020,
+        2021,
+        2022,
+        2023,
+        2024,
+        2025
+      ],
+      "variant_keywords": [
+        "s line",
+        "s-line",
+        "sport"
+      ],
+      "requires": {
+        "air_suspension": false,
+        "adaptive_damping": false
+      },
+      "pr_codes": [
+        "1BE"
+      ],
+      "chassis": "Sport coil suspension",
+      "launch_hint": "quattro (PR=1BE)/Sport",
+      "alignment": {
+        "front_toe": "0°20′",
+        "front_camber": "-1°07′",
+        "rear_toe": "0°20′",
+        "rear_camber": "-0°50′"
+      },
+      "confidence": "medium"
+    },
+    {
+      "id": "audi_a3_8p_standard",
+      "brand": "Audi",
+      "model": "A3",
+      "generation": "8P",
+      "years": [
+        2004,
+        2005,
+        2006,
+        2007,
+        2008,
+        2009,
+        2010,
+        2011,
+        2012,
+        2013
+      ],
+      "variant_keywords": [
+        "standard"
+      ],
+      "pr_codes": [
+        "UA0",
+        "UA4"
+      ],
+      "chassis": "Standard",
+      "launch_hint": "A3 (8P) UA0/UA4",
+      "alignment": {
+        "front_toe": "0°10′",
+        "front_camber": "-0°30′",
+        "rear_toe": "0°25′",
+        "rear_camber": "-1°20′"
+      },
+      "warning": "Observerad Launch-post hade saknade/felmappade bakvärden. Verifiera mot Haynes/OE.",
+      "confidence": "high"
+    },
+    {
+      "id": "skoda_superb3_standard",
+      "brand": "Škoda",
+      "model": "Superb",
+      "generation": "III / 3V",
+      "years": [
+        2015,
+        2016,
+        2017,
+        2018,
+        2019,
+        2020,
+        2021,
+        2022,
+        2023,
+        2024
+      ],
+      "variant_keywords": [
+        "standard"
+      ],
+      "g_codes": [
+        "G01"
+      ],
+      "chassis": "Basic chassis",
+      "launch_hint": "3V G01 BASIC CHASSIS",
+      "confidence": "medium"
+    },
+    {
+      "id": "seat_leon5f_cng",
+      "brand": "SEAT",
+      "model": "Leon",
+      "generation": "5F",
+      "years": [
+        2013,
+        2014,
+        2015,
+        2016,
+        2017,
+        2018,
+        2019,
+        2020
+      ],
+      "variant_keywords": [
+        "cng",
+        "tgi"
+      ],
+      "g_codes": [
+        "G17"
+      ],
+      "chassis": "CNG / multilink-specific group",
+      "launch_hint": "5F G17 CNG MODEL MULTI-LINK",
+      "confidence": "high"
+    }
+  ],
+  "known_vins": {
+    "WVGZZZ5NZHW424875": {
+      "brand": "Volkswagen",
+      "model": "Tiguan",
+      "year": 2017,
+      "generation": "AD",
+      "drive": "awd",
+      "variant": "standard",
+      "dcc": false,
+      "note": "2.0 TDI 190 DSG 4Motion"
+    },
+    "WVWZZZ3CZDE113838": {
+      "brand": "Volkswagen",
+      "model": "Passat",
+      "year": 2013,
+      "generation": "36",
+      "drive": "awd",
+      "variant": "Alltrack",
+      "note": "Passat B7 Alltrack"
+    },
+    "WVWZZZAUZHP782221": {
+      "brand": "Volkswagen",
+      "model": "Golf Variant",
+      "year": 2017,
+      "generation": "VII",
+      "drive": "fwd",
+      "variant": "standard",
+      "rearAxle": "torsion",
+      "note": "Golf VII Sportscombi 1.6 TDI DSG"
+    },
+    "WAUZZZF29KN097647": {
+      "brand": "Audi",
+      "model": "A6",
+      "year": 2019,
+      "generation": "C8 / F2",
+      "drive": "awd",
+      "variant": "S line sport",
+      "air": false,
+      "adaptive": false,
+      "note": "A6 45 TFSI quattro S line"
+    },
+    "WAUZZZ8P58A090512": {
+      "brand": "Audi",
+      "model": "A3",
+      "year": 2008,
+      "generation": "8P",
+      "drive": "fwd",
+      "variant": "standard",
+      "note": "A3 Sportback 1.4 TFSI, ej S line"
+    },
+    "VSSZZZ5FZJR108223": {
+      "brand": "SEAT",
+      "model": "Leon",
+      "year": 2018,
+      "generation": "5F",
+      "drive": "fwd",
+      "variant": "TGI CNG",
+      "rearAxle": "multilink",
+      "note": "Leon 1.4 TGI"
+    }
+  }
+}
