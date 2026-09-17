@@ -293,6 +293,109 @@
       "chassis": "CNG / multilink-specific group",
       "launch_hint": "5F G17 CNG MODEL MULTI-LINK",
       "confidence": "high"
+    },
+    {
+      "id": "audi_a3_8y_standard",
+      "brand": "Audi",
+      "model": "A3",
+      "generation": "8Y",
+      "years": [
+        2020,
+        2021,
+        2022,
+        2023,
+        2024
+      ],
+      "variant_keywords": [
+        "standard",
+        "standardchassi",
+        "komfort"
+      ],
+      "pr_codes": [
+        "1JA"
+      ],
+      "chassis": "Standardchassi / komfortchassi",
+      "launch_hint": "Sök i Launch efter A3 8Y + 1JA (standardchassi)",
+      "confidence": "high",
+      "evidence": "Audi MY2024 prislista: 1JA = Serienfahrwerk / standardchassi."
+    },
+    {
+      "id": "audi_a3_8y_sport_18",
+      "brand": "Audi",
+      "model": "A3",
+      "generation": "8Y",
+      "years": [
+        2020,
+        2021,
+        2022,
+        2023,
+        2024
+      ],
+      "variant_keywords": [
+        "sport",
+        "sportchassi",
+        "s line sport"
+      ],
+      "pr_codes": [
+        "1JC"
+      ],
+      "chassis": "Sportchassi, 15 mm sänkt, upp till 18-tums hjul",
+      "launch_hint": "Sök i Launch efter A3 8Y + 1JC (sportchassi)",
+      "confidence": "medium",
+      "evidence": "Audi MY2024 prislista: 1JC = sportchassi för max 18-tums hjul."
+    },
+    {
+      "id": "audi_a3_8y_sport_19",
+      "brand": "Audi",
+      "model": "A3",
+      "generation": "8Y",
+      "years": [
+        2020,
+        2021,
+        2022,
+        2023,
+        2024
+      ],
+      "variant_keywords": [
+        "sport 19",
+        "sportchassi 19",
+        "19 tum",
+        "19-tum"
+      ],
+      "pr_codes": [
+        "1JF"
+      ],
+      "chassis": "Sportchassi, 15 mm sänkt, 19-tums hjul",
+      "launch_hint": "Sök i Launch efter A3 8Y + 1JF (sportchassi 19 tum)",
+      "confidence": "high",
+      "evidence": "Audi MY2024 prislista: 1JF = sportchassi för 19-tums hjul."
+    },
+    {
+      "id": "audi_a3_8y_adaptive",
+      "brand": "Audi",
+      "model": "A3",
+      "generation": "8Y",
+      "years": [
+        2020,
+        2021,
+        2022,
+        2023,
+        2024
+      ],
+      "variant_keywords": [
+        "adaptive",
+        "adaptiv",
+        "adaptiva dämpare",
+        "dcc"
+      ],
+      "pr_codes": [
+        "PDE"
+      ],
+      "chassis": "Adaptivt chassi med Audi drive select, 10 mm sänkt",
+      "launch_hint": "Sök i Launch efter A3 8Y adaptivt chassi / PDE",
+      "confidence": "medium",
+      "warning": "PDE är Audis beställnings-/paketkod i MY2024-prislistan. Kontrollera PR-lappen om Launch använder en mer specifik fjädringskod.",
+      "evidence": "Audi MY2024 prislista: PDE = adaptivt chassi med dämparreglering, 10 mm lägre än standard."
     }
   ],
   "known_vins": {

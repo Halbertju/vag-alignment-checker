@@ -187,6 +187,13 @@ function showQuestions(fields){
   if(fields.includes("model")) add(`<label>Modell<input id="qModel" placeholder="t.ex. A3, Golf, Tiguan"></label>`);
   if(fields.includes("drive")) add(`<label>Drivning<select id="qDrive"><option value="">Välj</option><option value="fwd">FWD</option><option value="awd">AWD / quattro / 4Motion</option></select></label>`);
   if(fields.includes("variant")) add(`<label>Variant / chassi<select id="qVariant"><option value="">Vet inte</option><option>standard</option><option>S line sport</option><option>sport</option><option>Alltrack</option><option>Allroad</option><option>TGI CNG</option><option>BlueMotion</option></select></label>`);
+  if(fields.includes("a3_8y_chassis")) add(`<label>Chassi på A3 8Y<select id="qA3Chassis">
+      <option value="">Vet inte</option>
+      <option value="standard">Standardchassi</option>
+      <option value="sport">Sportchassi, max 18 tum</option>
+      <option value="sport 19">Sportchassi, 19 tum</option>
+      <option value="adaptive">Adaptivt chassi / dämparreglering</option>
+    </select></label>`);
   if(fields.includes("rearAxle")) add(`<label>Bakaxel<select id="qRear"><option value="">Vet inte</option><option value="torsion">Torsion beam</option><option value="multilink">Multi-link</option></select></label>`);
   if(fields.includes("dcc")) add(`<label>Har bilen DCC / adaptiva dämpare?<select id="qDcc"><option value="">Vet inte</option><option value="no">Nej</option><option value="yes">Ja</option></select></label>`);
   $("questions").classList.remove("hidden");
@@ -196,6 +203,7 @@ function continueQuestions(){
   if($("qModel")?.value) state.model=$("qModel").value;
   if($("qDrive")?.value) state.drive=$("qDrive").value;
   if($("qVariant")?.value) state.variant=$("qVariant").value;
+  if($("qA3Chassis")?.value) state.variant=$("qA3Chassis").value;
   if($("qRear")?.value) state.rearAxle=$("qRear").value;
   if($("qDcc")?.value) state.dcc=$("qDcc").value==="yes";
 
@@ -275,6 +283,7 @@ function renderResult(matches){
       <tr><td>Bak</td><td>${a.rear_toe||"-"}</td><td>${a.rear_camber||"-"}</td></tr></tbody></table>`:
       `<div class="info">Alignmentvärden är ännu inte inlagda för denna regel. Använd PR/G-gruppen i Haynes/OE.</div>`}
     ${best.warning?`<div class="warning"><strong>Databasvarning:</strong> ${best.warning}</div>`:""}
+    ${best.evidence?`<div class="info"><strong>Underlag:</strong> ${best.evidence}</div>`:""}
     ${ambiguity}
     <div class="small" style="margin-top:12px">Fordonsidentitet kommer från gratis VIN-källor + VAG-typkod; PR/G-grupp kommer från vår egen regelbas.</div>`;
   saveHistory(best);
