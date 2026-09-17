@@ -1,23 +1,22 @@
-# VAG Alignment Checker 0.2
+# VAG Alignment Checker 0.3
 
-Mål: användaren ska normalt bara skriva VIN.
+Version 0.3 lägger till riktig extern VIN-avkodning via NHTSA vPIC.
 
-## Så fungerar prototypen
+## Flöde
 1. Skriv VIN.
-2. Appen avkodar sådant som kan utläsas gratis lokalt (märke, modellår och vissa typfamiljer).
-3. Kända test-VIN kan ge full match direkt.
-4. Om VIN inte räcker visas endast relevanta följdfrågor.
-5. Om chassit fortfarande är osäkert ber appen om PR-lappen i stället för att gissa.
+2. Appen anropar NHTSA vPIC gratis och försöker få märke, modell, modellår, motor, drivning, kaross och växellåda.
+3. Resultatet skickas vidare till vår egen VAG-regelmotor.
+4. Om exakt chassivariant fortfarande saknas visas endast relevanta följdfrågor.
+5. Om regelbasen inte täcker bilen ber appen om PR-lapp i stället för att hitta på alignmentdata.
 
-## Begränsning utan betalt API
-En statisk gratis webbapp kan inte slå upp fullständig fabriksutrustning för ett godtyckligt VIN på internet.
-Därför är arbetsflödet med dynamiska följdfrågor och PR-lapp avsiktligt.
+## Viktig begränsning
+vPIC är en amerikansk offentlig datakälla. Europeiska bilar kan därför ge ofullständiga svar. Appen har kvar lokal VIN-fallback och vår manuella regelbas.
 
-## Kör lokalt
-```bash
-python -m http.server 8000
-```
-Öppna http://localhost:8000
+## Test
+Prova bland annat:
+- WAUZZZGY2RA025029 (Audi, MY2024 - nytt testfall)
+- WVGZZZ5NZHW424875
+- WAUZZZF29KN097647
 
-## Publicera gratis
-GitHub Pages eller Cloudflare Pages fungerar utan serverkostnad.
+## Publicera
+Ladda upp filerna i repository-roten och låt GitHub Pages publicera `main` / root.

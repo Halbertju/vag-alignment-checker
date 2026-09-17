@@ -9,9 +9,9 @@
 <body>
 <main class="wrap">
   <header>
-    <div class="eyebrow">VAG Alignment Checker · prototyp 0.2</div>
+    <div class="eyebrow">VAG Alignment Checker · prototyp 0.3</div>
     <h1>Klistra in chassinumret</h1>
-    <p class="lead">Appen försöker identifiera bilen och frågar bara efter det som saknas för att hitta rätt PR/G-grupp.</p>
+    <p class="lead">Appen söker först fordonsdata via en gratis VIN-källa och frågar bara efter det som fortfarande saknas för att hitta rätt PR/G-grupp.</p>
   </header>
 
   <section class="hero card">
@@ -53,7 +53,7 @@
     <div id="history"></div>
   </section>
 
-  <footer>Ingen betald datakälla används. När exakt chassi inte kan fastställas ska appen hellre fråga än gissa.</footer>
+  <footer>Ingen betald datakälla används. Fordonsidentitet hämtas i första hand via NHTSA vPIC. När exakt chassi inte kan fastställas ska appen hellre fråga än gissa.</footer>
 </main>
 <script src="app.js"></script>
 </body>
